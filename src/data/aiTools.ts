@@ -1,17 +1,31 @@
-// src/data/aiTools.ts
-
 export type AiCategory =
-    | "content"
-    | "marketing"
-    | "developer"
-    | "design"
-    | "video"
-    | "audio"
-    | "productivity"
-    | "automation"
-    | "other";
+    | "writing-editing"
+    | "image-generation-editing"
+    | "image-analysis"
+    | "music-audio"
+    | "voice-generation-conversion"
+    | "art-creative-design"
+    | "social-media"
+    | "ai-detection-anti-detection"
+    | "coding-development"
+    | "video-animation"
+    | "daily-life"
+    | "legal-finance"
+    | "business-management"
+    | "marketing-advertising"
+    | "health-wellness"
+    | "business-research"
+    | "education-translation"
+    | "chatbots-virtual-companions"
+    | "interior-architectural-design";
 
-export type PricingModel = "free" | "freemium" | "paid" | "enterprise";
+export type PricingModel =
+    | "free"
+    | "freemium"
+    | "paid"
+    | "free-trial"
+    | "contact"
+    | "opensource";
 
 export interface AiTool {
     id: string;
@@ -19,40 +33,10 @@ export interface AiTool {
     shortDescription: string;
     url: string;
     category: AiCategory;
+    pricing: PricingModel | string;
     tags: string[];
-    pricing: PricingModel;
-    featured?: boolean;
-    logoUrl?: string;
+    featured: boolean;
+    language: string;
 }
 
-export const aiToolsMock: AiTool[] = [
-    {
-        id: "1",
-        name: "PromptFlow",
-        shortDescription: "No-code workflows to connect multiple AI tools for marketing and growth.",
-        url: "https://example.com",
-        category: "marketing",
-        tags: ["automation", "workflows", "campaigns"],
-        pricing: "freemium",
-        featured: true,
-    },
-    {
-        id: "2",
-        name: "CodePilot AI",
-        shortDescription: "AI assistant for developers with code suggestions and refactors.",
-        url: "https://example.com",
-        category: "developer",
-        tags: ["coding", "assistant", "IDE"],
-        pricing: "free",
-        featured: true,
-    },
-    {
-        id: "3",
-        name: "StoryVision",
-        shortDescription: "Turn scripts into AI-generated videos with voice and b-roll.",
-        url: "https://example.com",
-        category: "video",
-        tags: ["video", "creators"],
-        pricing: "paid",
-    },
-];
+export const aiToolsMock: AiTool[] = [];

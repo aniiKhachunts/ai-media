@@ -1,22 +1,23 @@
-// src/App.tsx
 import React from "react";
+import {Route, Routes} from "react-router-dom";
 import Header from "./components/layout/Header";
 import Hero from "./components/home/Hero";
-import StatsSection from "./components/home/StatsSection";
-import AiGrid from "./components/ai/AiGrid";
 import Footer from "./components/layout/Footer";
+import ToolDetailPage from "./components/ai/ToolDetailPage";
 
 const App: React.FC = () => {
     return (
-        <div className="min-h-screen bg-neutral-950 text-neutral-50">
-            <Header />
-            <main>
-                <Hero />
-                <StatsSection />
-                <AiGrid />
-                {/* Later: Reviews, clients, cases, webinar, big CTA, etc. */}
+        <div className="min-h-screen bg-[var(--bg-main)] text-neutral-50">
+            <Header/>
+
+            <main className="pb-12">
+                <Routes>
+                    <Route path="/" element={<Hero/>}/>
+                    <Route path="/tool/:id" element={<ToolDetailPage/>}/>
+                </Routes>
             </main>
-            <Footer />
+
+            <Footer/>
         </div>
     );
 };

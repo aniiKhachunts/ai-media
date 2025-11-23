@@ -1,43 +1,44 @@
-// src/components/layout/Header.tsx
 import React from "react";
+import ThemeToggle from "./ThemeToggle";
+import {Link} from "react-router-dom";
+import {useT} from "../../i18n/LanguageContext";
+import LanguageToggle from "./LanguageToggle.tsx";
 
 const Header: React.FC = () => {
+    const t = useT();
+
     return (
-        <header className="sticky top-0 z-30 border-b border-white/5 bg-neutral-950/80 backdrop-blur">
-            <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 lg:px-0">
-                {/* Logo / Brand */}
-                <div className="flex items-center gap-2">
-                    <div className="h-9 w-9 rounded-full bg-gradient-to-br from-indigo-500 via-fuchsia-500 to-emerald-400" />
-                    <div className="flex flex-col leading-tight">
-            <span className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-400">
-              The AI Media
-            </span>
-                        <span className="text-xs text-neutral-500">
-              Curated directory of AI tools
-            </span>
+        <header className="app-header">
+            <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 lg:px-0 lg:py-4">
+                <Link to="/" className="hover:text-[var(--color-text-main)]">
+                    <div className="flex items-center gap-3 cursor-pointer">
+                        <div
+                            className="
+                          flex h-9 w-9 items-center justify-center
+                          rounded-2xl
+                          bg-[radial-gradient(circle_at_30%_30%,#ff5bfa_0%,#b86cff_40%,#3a1f57_100%)]
+                          shadow-[0_0_18px_rgba(204,101,255,0.55)]
+                        "
+                        >
+                            <span className="text-xs font-semibold text-white">AI</span>
+                        </div>
+
+                        <div className="flex flex-col leading-tight">
+                            <span
+                                className="text-sm font-semibold tracking-[0.18em] uppercase text-[var(--color-text-main)]">
+                              All AIs
+                            </span>
+                            <div className="text-[11px] text-[var(--color-text-soft)]">
+                                {t("nav.logoSubtitle")}
+                            </div>
+                        </div>
                     </div>
+                </Link>
+
+                <div className="flex items-center gap-2">
+                    <LanguageToggle/>
+                    <ThemeToggle/>
                 </div>
-
-                {/* Nav */}
-                <nav className="hidden items-center gap-6 text-sm font-medium text-neutral-300 md:flex">
-                    <a href="#tools" className="transition hover:text-white">
-                        AI Tools
-                    </a>
-                    <a href="#cases" className="transition hover:text-white">
-                        Use cases
-                    </a>
-                    <a href="#reviews" className="transition hover:text-white">
-                        Reviews
-                    </a>
-                    <a href="#contact" className="transition hover:text-white">
-                        Contact
-                    </a>
-                </nav>
-
-                {/* CTA */}
-                <button className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-neutral-50 transition hover:bg-white/10">
-                    Submit your AI tool
-                </button>
             </div>
         </header>
     );

@@ -1,54 +1,119 @@
-// src/components/ai/AiCard.tsx
 import React from "react";
+import {motion} from "framer-motion";
 import type {AiTool} from "../../data/aiTools";
+import {useNavigate} from "react-router-dom";
+import {FiEdit2, FiTrash2} from "react-icons/fi";
+import {useT} from "../../i18n/LanguageContext";
 
 interface AiCardProps {
     tool: AiTool;
+    onEdit?: (tool: AiTool) => void;
+    onDelete?: (tool: AiTool) => void;
 }
 
-const AiCard: React.FC<AiCardProps> = ({ tool }) => {
+const AiCard: React.FC<AiCardProps> = ({tool, onEdit, onDelete}) => {
+    const navigate = useNavigate();
+    const t = useT();
+
+    const handleCardClick = () => navigate(`/tool/${tool.id}`);
+
+    const categoryLabel = t(`categories.${tool.category}`);
+    let pricingLabel = tool.pricing;
+    if (tool.pricing === "free") pricingLabel = t("filters.pricingFree");
+    else if (tool.pricing === "paid") pricingLabel = t("filters.pricingPaid");
+    else if (tool.pricing === "contact")
+        pricingLabel = t("filters.pricingContact");
+
     return (
-        <article className="group flex flex-col justify-between rounded-3xl border border-white/10 bg-neutral-900/60 p-4 transition hover:-translate-y-1 hover:border-fuchsia-400 hover:bg-neutral-900 hover:shadow-[0_0_40px_rgba(236,72,153,0.35)]">
-            {/* Category + pricing */}
-            <div className="flex items-center justify-between gap-3 text-[10px] uppercase tracking-[0.16em] text-neutral-400">
-                <span>{tool.category}</span>
-                <span className="rounded-full border border-white/10 px-2 py-0.5 text-[9px]">
-          {tool.pricing}
-        </span>
+        <motion.article
+            layout
+            whileHover={{y: -6, scale: 1.015}}
+            transition={{type: "spring", stiffness: 260, damping: 22}}
+            className="group grid cursor-pointer grid-rows-[auto,1fr,auto] gap-4 rounded-3xl border border-[var(--color-border-soft)] bg-[var(--color-surface-grid-card)] p-4 shadow-[0_10px_30px_rgba(0,0,0,0.25)] hover:border-[var(--color-primary)] hover:shadow-[0_22px_50px_rgba(0,0,0,0.35)] sm:p-5"
+            onClick={handleCardClick}
+        >
+            <div className="flex items-start justify-between gap-3 text-[11px]">
+                <div className="flex max-w-[65%] flex-col gap-1">
+          <span
+              className="inline-flex w-fit rounded-full bg-[var(--color-chip-bg)] px-3 py-0.5 text-[9px] uppercase tracking-[0.16em] text-[var(--color-text-soft)]">
+            {categoryLabel}
+          </span>
+
+                    <span
+                        className="inline-flex w-fit rounded-full border border-[var(--color-border-soft)] bg-[var(--color-surface-grid-soft)] px-3 py-0.5 text-[10px] font-semibold text-[var(--color-text-main)]">
+            {pricingLabel}
+          </span>
+
+                    {tool.featured && (
+                        <span
+                            className="inline-flex w-fit rounded-full bg-[var(--color-accent-soft)] px-2.5 py-0.5 text-[9px] font-semibold uppercase tracking-[0.14em] text-[var(--color-accent-1)]">
+              {t("detail.featured")}
+            </span>
+                    )}
+                </div>
+
+                <div className="flex items-start gap-1.5">
+                    {onEdit && (
+                        <button
+                            type="button"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onEdit(tool);
+                            }}
+                            className="flex h-7 w-7 cursor-pointer items-center justify-center rounded-full border border-[var(--color-border-soft)] bg-[var(--color-chip-bg)] text-[var(--color-text-main)] hover:border-[var(--color-primary)]"
+                        >
+                            <FiEdit2 className="h-3.5 w-3.5"/>
+                        </button>
+                    )}
+
+                    {onDelete && (
+                        <button
+                            type="button"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onDelete(tool);
+                            }}
+                            className="flex h-7 w-7 cursor-pointer items-center justify-center rounded-full bg-red-500/80 text-white hover:brightness-110"
+                        >
+                            <FiTrash2 className="h-3.5 w-3.5"/>
+                        </button>
+                    )}
+                </div>
             </div>
 
-            {/* Title + description */}
-            <div className="mt-3 space-y-1.5">
-                <h3 className="text-sm font-semibold text-white group-hover:text-fuchsia-200">
+            <div className="space-y-1.5">
+                <h3 className="text-sm font-semibold leading-snug text-[var(--color-text-main)] group-hover:text-[var(--color-primary)]">
                     {tool.name}
                 </h3>
-                <p className="text-xs text-neutral-400 line-clamp-3">
+
+                <p className="text-xs leading-snug text-[var(--color-text-soft)]">
                     {tool.shortDescription}
                 </p>
             </div>
 
-            {/* Tags + link */}
-            <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+            <div className="flex items-center justify-between gap-3">
                 <div className="flex flex-wrap gap-1.5">
-                    {tool.tags.slice(0, 4).map((tag) => (
+                    {tool.tags.map((tag) => (
                         <span
                             key={tag}
-                            className="rounded-full bg-neutral-800/80 px-2 py-0.5 text-[10px] text-neutral-300"
+                            className="rounded-full bg-[var(--color-chip-bg)] px-2.5 py-0.5 text-[10px] text-[var(--color-text-main)] whitespace-nowrap"
                         >
               #{tag}
             </span>
                     ))}
                 </div>
+
                 <a
                     href={tool.url}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-[11px] font-medium text-fuchsia-300 underline-offset-2 hover:underline"
+                    onClick={(e) => e.stopPropagation()}
+                    className="text-[11px] font-semibold text-[var(--color-primary)] underline-offset-2 group-hover:underline"
                 >
-                    Перейти →
+                    {t("toolCard.goTo")}
                 </a>
             </div>
-        </article>
+        </motion.article>
     );
 };
 
