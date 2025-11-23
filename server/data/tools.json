@@ -1,0 +1,24 @@
+[
+  {
+    "id": "nH01EszHFN",
+    "name": "asd",
+    "shortDescription": "asdasd",
+    "url": "https://anini.com",
+    "category": "writing-editing",
+    "pricing": "freemium",
+    "tags": [],
+    "featured": false
+  },
+  {
+    "id": "hZc1XMZA_T",
+    "name": "debil Varo",
+    "shortDescription": "debil varo",
+    "url": "https://debilvaro.com",
+    "category": "art-creative-design",
+    "pricing": "paid",
+    "tags": [
+      "debil varo"
+    ],
+    "featured": false
+  }
+]
