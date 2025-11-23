@@ -262,7 +262,7 @@ const AiGrid: React.FC = () => {
                         url: editTool.url,
                         shortDescription: editTool.shortDescription,
                         category: editTool.category,
-                        pricing: editTool.pricing,
+                        pricing: editTool.pricing as PricingModel,
                         tags: editTool.tags,
                         language: editTool.language ?? "English",
                         featured: Boolean(editTool.featured)

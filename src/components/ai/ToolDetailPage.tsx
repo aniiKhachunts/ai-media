@@ -334,7 +334,7 @@ const ToolDetailPage: React.FC = () => {
                     url: tool.url,
                     shortDescription: tool.shortDescription,
                     category: tool.category,
-                    pricing: tool.pricing,
+                    pricing: tool.pricing as PricingModel,
                     tags: tool.tags,
                     language: tool.language ?? "English",
                     featured: Boolean(tool.featured)
